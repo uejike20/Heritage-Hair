@@ -1,13 +1,18 @@
 // src/components/sections/AboutSection.jsx
+
 import React from 'react';
 import { motion } from 'framer-motion';
-import NewAboutImage from '@/images/heritage-hair-models.jpg'; // 1. ADD THIS IMPORT
+
+// 1. Import BOTH images at the top
+import AboutImageFront from '@/images/about-image-front.jpg';
+import AboutImageBack from '@/images/about-image-back.jpg';
 
 const AboutSection = () => {
   return (
     <section id="about" className="py-16 px-4 sm:px-6 lg:px-8 bg-emerald-900 text-white">
       <div className="max-w-7xl mx-auto">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
+          {/* The text content on the left remains the same */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -39,18 +44,36 @@ const AboutSection = () => {
             </div>
           </motion.div>
 
+          {/* 2. This is the new flip card container */}
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="relative"
+            // Add `group` and `perspective` for the 3D effect
+            className="group [perspective:1000px]"
           >
-            <img  
-              alt="Three happy children with beautiful natural hair" // 3. UPDATE THE ALT TEXT
-              className="w-full h-auto rounded-2xl shadow-2xl"
-              src={NewAboutImage} // 2. USE THE IMPORTED IMAGE
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-emerald-900/50 to-transparent rounded-2xl"></div>
+            {/* This inner div is what will actually flip */}
+            <div className="relative w-full h-full transition-transform duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
+              
+              {/* === FRONT OF THE CARD === */}
+              <div className="absolute w-full h-full [backface-visibility:hidden]">
+                <img  
+                  src={AboutImageFront}
+                  alt="Heritage Hair products display"
+                  className="w-full h-auto object-cover rounded-2xl shadow-2xl"
+                />
+              </div>
+
+              {/* === BACK OF THE CARD === */}
+              <div className="absolute w-full h-full [backface-visibility:hidden] [transform:rotateY(180deg)]">
+                 <img  
+                  src={AboutImageBack}
+                  alt="Three happy children with beautiful natural hair"
+                  className="w-full h-auto object-cover rounded-2xl shadow-2xl"
+                />
+              </div>
+
+            </div>
           </motion.div>
         </div>
       </div>
