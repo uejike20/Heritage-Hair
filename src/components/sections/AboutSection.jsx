@@ -3,7 +3,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-// 1. Import BOTH images at the top
+// Make sure both of your image files are imported
 import AboutImageFront from '@/images/about-image-front.jpg';
 import AboutImageBack from '@/images/about-image-back.jpg';
 
@@ -12,7 +12,7 @@ const AboutSection = () => {
     <section id="about" className="py-16 px-4 sm:px-6 lg:px-8 bg-emerald-900 text-white">
       <div className="max-w-7xl mx-auto">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* The text content on the left remains the same */}
+          {/* Text content on the left (no changes here) */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -44,19 +44,31 @@ const AboutSection = () => {
             </div>
           </motion.div>
 
-          {/* 2. This is the new flip card container */}
+          {/* Flip Card Container */}
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            // Add `group` and `perspective` for the 3D effect
             className="group [perspective:1000px]"
           >
-            {/* This inner div is what will actually flip */}
             <div className="relative w-full h-full transition-transform duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
               
-              {/* === FRONT OF THE CARD === */}
-              <div className="absolute w-full h-full [backface-visibility:hidden]">
+              {/*
+                =================================================
+                === THE FIX: INVISIBLE SPACER IMAGE           ===
+                =================================================
+                This image is not 'absolute'. Its only purpose
+                is to give the parent container the correct height.
+                The 'invisible' class hides it from view.
+              */}
+              <img
+                src={AboutImageFront}
+                alt=""
+                className="w-full h-auto rounded-2xl invisible"
+              />
+
+              {/* === FRONT OF THE CARD (Absolutely Positioned) === */}
+              <div className="absolute top-0 left-0 w-full h-full [backface-visibility:hidden]">
                 <img  
                   src={AboutImageFront}
                   alt="Heritage Hair products display"
@@ -64,8 +76,8 @@ const AboutSection = () => {
                 />
               </div>
 
-              {/* === BACK OF THE CARD === */}
-              <div className="absolute w-full h-full [backface-visibility:hidden] [transform:rotateY(180deg)]">
+              {/* === BACK OF THE CARD (Absolutely Positioned) === */}
+              <div className="absolute top-0 left-0 w-full h-full [backface-visibility:hidden] [transform:rotateY(180deg)]">
                  <img  
                   src={AboutImageBack}
                   alt="Three happy children with beautiful natural hair"
