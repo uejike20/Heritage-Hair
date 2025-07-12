@@ -1,5 +1,7 @@
+// src/components/sections/AboutSection.jsx
 import React from 'react';
 import { motion } from 'framer-motion';
+import NewAboutImage from '@/images/heritage-hair-models.jpg'; // 1. ADD THIS IMPORT
 
 const AboutSection = () => {
   return (
@@ -44,9 +46,10 @@ const AboutSection = () => {
             className="relative"
           >
             <img  
-              alt="Natural shea butter and herbs used in Heritage Hair products"
+              alt="Three happy children with beautiful natural hair" // 3. UPDATE THE ALT TEXT
               className="w-full h-auto rounded-2xl shadow-2xl"
-             src="https://images.unsplash.com/photo-1632316718043-ebe0ddf4e4d0" />
+              src={NewAboutImage} // 2. USE THE IMPORTED IMAGE
+            />
             <div className="absolute inset-0 bg-gradient-to-t from-emerald-900/50 to-transparent rounded-2xl"></div>
           </motion.div>
         </div>
