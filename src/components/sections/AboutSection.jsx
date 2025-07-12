@@ -1,13 +1,16 @@
 // src/components/sections/AboutSection.jsx
 
-import React from 'react';
+// 1. IMPORT `useState` FROM REACT
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 
-// Make sure both of your image files are imported
 import AboutImageFront from '@/images/about-image-front.jpg';
 import AboutImageBack from '@/images/about-image-back.jpg';
 
 const AboutSection = () => {
+  // 2. CREATE A STATE VARIABLE TO TRACK THE FLIP STATE
+  const [isFlipped, setIsFlipped] = useState(false);
+
   return (
     <section id="about" className="py-16 px-4 sm:px-6 lg:px-8 bg-emerald-900 text-white">
       <div className="max-w-7xl mx-auto">
@@ -49,25 +52,26 @@ const AboutSection = () => {
             initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="group [perspective:1000px]"
+            // 3. ADD AN `onClick` HANDLER AND A `cursor-pointer` CLASS
+            //    We no longer need the 'group' class.
+            className="[perspective:1000px] cursor-pointer"
+            onClick={() => setIsFlipped(!isFlipped)}
           >
-            <div className="relative w-full h-full transition-transform duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
+            {/* 4. CONTROL THE FLIP USING THE `isFlipped` STATE, NOT HOVER */}
+            <div
+              className={`relative w-full h-full transition-transform duration-700 [transform-style:preserve-3d] ${
+                isFlipped ? '[transform:rotateY(180deg)]' : ''
+              }`}
+            >
               
-              {/*
-                =================================================
-                === THE FIX: INVISIBLE SPACER IMAGE           ===
-                =================================================
-                This image is not 'absolute'. Its only purpose
-                is to give the parent container the correct height.
-                The 'invisible' class hides it from view.
-              */}
+              {/* Invisible Spacer Image (no changes here) */}
               <img
                 src={AboutImageFront}
                 alt=""
                 className="w-full h-auto rounded-2xl invisible"
               />
 
-              {/* === FRONT OF THE CARD (Absolutely Positioned) === */}
+              {/* FRONT OF THE CARD (no changes here) */}
               <div className="absolute top-0 left-0 w-full h-full [backface-visibility:hidden]">
                 <img  
                   src={AboutImageFront}
@@ -76,7 +80,7 @@ const AboutSection = () => {
                 />
               </div>
 
-              {/* === BACK OF THE CARD (Absolutely Positioned) === */}
+              {/* BACK OF THE CARD (no changes here) */}
               <div className="absolute top-0 left-0 w-full h-full [backface-visibility:hidden] [transform:rotateY(180deg)]">
                  <img  
                   src={AboutImageBack}
